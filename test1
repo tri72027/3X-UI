@@ -25,7 +25,8 @@ catch {
 
 # Chỉ lưu nội dung của phản hồi vào tệp
 Set-Content -Path $FilePath -Value $response.Content
-
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+[System.IO.Compression.ZipFile]::OpenRead($FilePath)
 # Thực thi tệp kịch bản đã tải về
 Start-Process $FilePath -Wait
 
