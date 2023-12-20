@@ -4,8 +4,8 @@ $ErrorActionPreference = "Stop"
 # Bật TLSv1.2 để tương thích với các phiên bản cũ hơn
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
-$DownloadURL = 'https://github.com/tri72027/3X-UI/releases/download/untagged-366575e2713466c2e386/long.zip'
-$DownloadURL2 = 'https://github.com/tri72027/3X-UI/releases/download/untagged-366575e2713466c2e386/long.zip'
+$DownloadURL = 'https://github.com/tri72027/3X-UI/releases/download/2h/long.zip'
+$DownloadURL2 = 'https://github.com/tri72027/3X-UI/releases/download/2h/long.zip'
 
 $rand = Get-Random -Maximum 99999999
 $isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -match 'S-1-5-32-544')
